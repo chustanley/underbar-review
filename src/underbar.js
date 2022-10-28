@@ -38,7 +38,12 @@
   // Like first, but for the last elements. If n is undefined, return just the
   // last element.
   _.last = function(array, n) {
+//1st condition =
+
   };
+
+
+
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
