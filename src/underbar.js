@@ -186,6 +186,37 @@
     }
 
     return finalArray;
+    // var resultArray = [];
+    // var iteratorArray = [];
+
+
+    // if (iterator === undefined) {
+    //   for (var i = 0; i < array.length; i++ ) {
+    //     if (_.indexOf(resultArray, array[i]) < 0 ) {
+    //       resultArray.push(array[i]);
+    //     }
+
+    //   }
+    //   return resultArray;
+
+    // } else {
+
+    //   for (var i = 0; i < array.length; i++) {
+
+    //     var currValue = iterator(array[i]);
+    //     iteratorArray.push(currValue);
+
+
+    //     if (_.indexOf(resultArray, iteratorArray[i]) < 0 ) {
+    //       resultArray.push(array[i]);
+    //     }
+    //   }
+
+
+
+    //   return resultArray;
+    // }
+
 
   };
 
@@ -281,12 +312,58 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    // when collection length is 0, return true
+    // there is no case with no iterator
+    if (iterator === undefined) {
+      return _.reduce(collection, function(accumulator, item) {
+        // if accumulator = false (not true) only return false from now on
+        if (!accumulator) {
+          return false;
+        }
+        // keep testing items to see if true or false
+        return Boolean(item);
+
+      }, true);
+    } else {
+      return _.reduce(collection, function(accumulator, item) {
+        // if accumulator = false (not true) only return false from now on
+        if (!accumulator) {
+          return false;
+        }
+        // keep testing items to see if true or false
+        return Boolean(iterator(item));
+
+      }, true);
+
+    }
+
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    // even if some values are false return true because at least some value are true
+    // if iterator is undefined then invoke _.identity
+    var result = false;
+
+    _.each(collection, function(item) {
+      var currentArray = [];
+      currentArray.push(item);
+      var bool = false;
+
+      if (iterator === undefined) {
+        bool = _.every(currentArray);
+      } else {
+        bool = _.every(currentArray, iterator);
+      }
+
+      if (bool) {
+        result = bool;
+      }
+
+    });
+    return result;
   };
 
 
