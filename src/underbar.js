@@ -477,9 +477,10 @@
 
     // TIP: We'll return a new function that delegates to the old one, but only
     // if it hasn't been called before.
-    return function() {
-      var propertyKey = JSON.stringify(func);
 
+    return function() {
+      var propertyKey = JSON.stringify(arguments);
+      console.log(propertyKey);
       if (resultObject[propertyKey] === undefined) {
         resultObject[propertyKey] = func.apply(this, arguments);
       }
