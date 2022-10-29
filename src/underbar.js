@@ -379,18 +379,48 @@
   //
   // Example:
   //   var obj1 = {key1: "something"};
+
   //   _.extend(obj1, {
   //     key2: "something new",
   //     key3: "something else new"
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
-  _.extend = function(obj) {
+  _.extend = function(destination, source) {
+  // call
+  // for each value in source, to be added to destination
+
+  //Punith
+    _.each(arguments, function (stan) {
+
+      _.each(stan, function (item, index) {
+        destination[index] = item;
+      });
+
+    });
+    return destination;
+
+
+    // arguments[0] = destination
+    // ANYTHING after [0] is the object properties that we need to add into destination
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-  _.defaults = function(obj) {
+  _.defaults = function(destination, source) {
+
+
+    _.each(arguments, function (stan) {
+
+      _.each(stan, function (item, index) {
+
+        if (destination[index] === undefined) {
+          destination[index] = item;
+        }
+      });
+
+    });
+    return destination;
   };
 
 
@@ -434,6 +464,43 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+  // return a function
+  // when called
+    // will check if it has computed the result for the given argument and return that value instead of possible
+
+    // memoize memorizes a functions result: functions result is received by calling
+
+    // func = a function that already has arguments inside of it
+
+    var resultObject = {};
+    // func, is assumed to be the whole function including argument and body
+
+    // TIP: We'll return a new function that delegates to the old one, but only
+    // if it hasn't been called before.
+    return function() {
+      var propertyKey = JSON.stringify(func);
+
+      if (resultObject[propertyKey] === undefined) {
+        resultObject[propertyKey] = func.apply(this, arguments);
+      }
+
+      return resultObject[propertyKey];
+
+
+
+
+
+      // if (!alreadyCalled) {
+      //   // TIP: .apply(this, arguments) is the standard way to pass on all of the
+      //   // infromation from one function call to another.
+      //   result = func.apply(this, arguments);
+      //   alreadyCalled = true;
+      // }
+      // // The new function always returns the originally computed result.
+      // return result;
+    };
+
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
