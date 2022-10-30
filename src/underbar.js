@@ -148,74 +148,34 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    // create a result array
+    // check index of the target, if its present then indexOf returns 0 or >0
+    // else it returns -1 or <0
 
     var resultArray = [];
-    var resultObject = {};
-    var finalArray = [];
+    var iteratorArray = [];
 
-    // 2 sides of uniq
-
-    // 1. if there is an iterator, apply function iteration to every item in array
-    // push those items into result array
-    // 2. if there is no iterator, apply _.identity function to each item in the array and push those into result array
-    if (iterator) {
-      _.each(array, function (item, index) {
-        resultArray.push(iterator(item));
-
-      });
-
-    } else {
-      _.each(array, function(item, index) {
-        resultArray.push(_.identity(item));
-      });
-    }
-
-    // loop through resultArray
-    // if resultObject doesn't have this key [item]
-    // add resultObject[item] assign to array[index]
-    for (var i = 0; i < resultArray.length; i++) {
-      if (resultObject[resultArray[i]] === undefined) {
-        resultObject[resultArray[i]] = array[i];
-
+    if (iterator === undefined) {
+      for (var i = 0; i < array.length; i++ ) {
+        if (_.indexOf(resultArray, array[i]) < 0 ) {
+          resultArray.push(array[i]);
+        }
       }
+      return resultArray;
+    } else {
+
+      for (var i = 0; i < array.length; i++) {
+
+        var currValue = iterator(array[i]);
+
+        if (_.indexOf(iteratorArray, currValue) < 0 ) {
+          iteratorArray.push(currValue);
+          resultArray.push(array[i]);
+        }
+      }
+
+      return resultArray;
     }
-
-    // loop through object  and push value into finalArray
-    for ( var key in resultObject) {
-      finalArray.push(resultObject[key]);
-    }
-
-    return finalArray;
-    // var resultArray = [];
-    // var iteratorArray = [];
-
-
-    // if (iterator === undefined) {
-    //   for (var i = 0; i < array.length; i++ ) {
-    //     if (_.indexOf(resultArray, array[i]) < 0 ) {
-    //       resultArray.push(array[i]);
-    //     }
-
-    //   }
-    //   return resultArray;
-
-    // } else {
-
-    //   for (var i = 0; i < array.length; i++) {
-
-    //     var currValue = iterator(array[i]);
-    //     iteratorArray.push(currValue);
-
-
-    //     if (_.indexOf(resultArray, iteratorArray[i]) < 0 ) {
-    //       resultArray.push(array[i]);
-    //     }
-    //   }
-
-
-
-    //   return resultArray;
-    // }
 
 
   };
@@ -390,7 +350,7 @@
   // call
   // for each value in source, to be added to destination
 
-  //Punith
+    //Punith
     _.each(arguments, function (stan) {
 
       _.each(stan, function (item, index) {
@@ -480,7 +440,6 @@
 
     return function() {
       var propertyKey = JSON.stringify(arguments);
-      console.log(propertyKey);
       if (resultObject[propertyKey] === undefined) {
         resultObject[propertyKey] = func.apply(this, arguments);
       }
@@ -511,6 +470,11 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+    // we need arguments parameter, that is greater than (1)
+    // we need to invoke this function within set time out
+
+    return setTimeout.apply(this, arguments);
+
   };
 
 
@@ -525,6 +489,22 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
+    // need a duplicate array
+    // create a function generates random numbers from 0 to array.length
+    // call above function
+    // add to empty array & remove from duplicate array
+    var dupArray = array.slice();
+    var resultArray = [];
+    var randomNumber;
+
+    // Math.floor(Math.random() * dupArray.length)
+    while (dupArray.length > 0) {
+      randomNumber = Math.floor(Math.random() * dupArray.length);
+      resultArray.push(dupArray[randomNumber]);
+      dupArray.splice(randomNumber, 1);
+
+    }
+    return resultArray;
   };
 
 
