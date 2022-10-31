@@ -82,6 +82,7 @@
     }
   };
 
+
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target) {
@@ -350,7 +351,6 @@
   // call
   // for each value in source, to be added to destination
 
-    //Punith
     _.each(arguments, function (stan) {
 
       _.each(stan, function (item, index) {
@@ -370,9 +370,9 @@
   _.defaults = function(destination, source) {
 
 
-    _.each(arguments, function (stan) {
+    _.each(arguments, function (source) {
 
-      _.each(stan, function (item, index) {
+      _.each(source, function (item, index) {
 
         if (destination[index] === undefined) {
           destination[index] = item;
