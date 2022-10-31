@@ -370,9 +370,9 @@
   _.defaults = function(destination, source) {
 
 
-    _.each(arguments, function (stan) {
+    _.each(arguments, function (source) {
 
-      _.each(stan, function (item, index) {
+      _.each(source, function (item, index) {
 
         if (destination[index] === undefined) {
           destination[index] = item;
