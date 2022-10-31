@@ -350,7 +350,6 @@
   // call
   // for each value in source, to be added to destination
 
-    //Punith
     _.each(arguments, function (stan) {
 
       _.each(stan, function (item, index) {
